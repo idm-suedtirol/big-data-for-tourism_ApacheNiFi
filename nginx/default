@@ -1,0 +1,21 @@
+server {
+    listen 80 default_server;
+    server_name localhost;
+
+    location / {
+
+        # The location of our Kibana server (this is default)
+
+        proxy_pass http://localhost:5601;
+	proxy_redirect off;
+	include proxy_params;
+
+        # Send a Basic auth header to Kibana on every request to get past the log - in UI.
+        # "bmdpbng6c2VjcmV0cGFzc3dvcmQ="is a base64 encoded string of my service account 's credentials "nginx:secretpassword"
+
+        proxy_set_header Authorization "Basic <auth_token>";
+#        return 301 $scheme://$host/app/kibana#/dashboard/9dfb6670-f2f8-11e8-96fe-871e3bdeb882;
+
+ 
+    }
+}
